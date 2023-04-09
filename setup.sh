@@ -9,8 +9,3 @@ sudo apt install \
 # ログインシェルの変更
 sudo chsh $USER -s $(which zsh)
 
-### dotfiles
-git clone https://github.com/Tiramister/dotfiles.git
-cd dotfiles
-./init.sh
-

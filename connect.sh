@@ -25,18 +25,14 @@ while [ -z $public_ip ]; do
 done
 echo "[INFO] Public IP: $public_ip" >&2
 
-while [ "$(get_state)" != 'running' ]; do
-  sleep 5
-done
-
 while :; do
   ssh -o StrictHostKeyChecking=no -l ubuntu $public_ip
 
-  if [ "$?" -eq 0 ]; then
-    break
-  else
+  if [ "$?" -eq 255 ]; then
     echo "[ERROR] Failed to connect to the server. Try in 5 secs..."
     sleep 5
+  else
+    break
   fi
 done
 

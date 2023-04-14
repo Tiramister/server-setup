@@ -4,11 +4,13 @@ sudo apt install git zsh libssl-dev pkg-config build-essential
 # zsh as login shell
 sudo chsh $USER -s $(which zsh)
 
+# FUSE
+sudo add-apt-repository universe && sudo apt install libfuse2
+
 # neovim
 curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
 chmod u+x nvim.appimage
-./nvim.appimage
-rm nvim.appimage
+sudo mv nvim.appimage /usr/local/bin/nvim
 
 # lazygit
 LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')

@@ -1,11 +1,12 @@
-#!/bin/sh
+#!/bin/zsh
 
-if [ $# -lt 1 ]; then
-  echo '[ERROR] Specify the instance ID' >&2
+if [ $# -lt 2 ]; then
+  echo "[ERROR] Usage: $0 <instance_id> <key_path>" >&2
   exit 1
 fi
 
 instance_id=$1
+key_path=$2
 
 function get_state() {
   state=$(aws ec2 describe-instances --instance-ids $instance_id \
@@ -26,7 +27,7 @@ done
 echo "[INFO] Public IP: $public_ip" >&2
 
 while :; do
-  ssh -o StrictHostKeyChecking=no -l ubuntu $public_ip
+  ssh -i $key_path -l ubuntu -o StrictHostKeyChecking=no $public_ip
 
   if [ "$?" -eq 255 ]; then
     echo "[ERROR] Failed to connect to the server. Try in 5 secs..."
